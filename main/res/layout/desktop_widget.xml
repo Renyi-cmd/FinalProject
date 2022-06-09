@@ -1,0 +1,44 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Widget.FinalProject.AppWidget.Container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.FinalProject.AppWidgetContainer">
+
+    <TextView
+        android:id="@+id/daysLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:clickable="true"
+        android:fontFamily="sans-serif-light"
+        android:text="0"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="70sp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/daysLeft"
+        android:layout_alignEnd="@id/daysLeft"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:text="核酸还有"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#80000000"
+        android:textSize="16sp"
+        android:typeface="normal" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/daysLeft"
+        android:layout_alignStart="@id/daysLeft"
+        android:text="    天 过期"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#80000000"
+        android:textSize="16sp" />
+
+</RelativeLayout>
