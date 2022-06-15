@@ -16,7 +16,7 @@
 
     <TextView
         android:id="@+id/daysLeft"
-        android:layout_width="52dp"
+        android:layout_width="81dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:clickable="true"
@@ -29,7 +29,7 @@
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="#FFFFFF"
-        android:textSize="70sp" />
+        android:textSize="60sp" />
 
     <TextView
         android:id="@+id/textView4"
@@ -43,7 +43,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="10"
-        android:text="核酸还有"
+        android:text="核酸还有    "
         android:textAlignment="textEnd"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="#FFFFFF"
@@ -60,24 +60,9 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="10"
-        android:text="    过期"
+        android:text="    小时过期"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="#FFFFFF"
         android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/dayStr"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textView5"
-        android:layout_toRightOf="@id/daysLeft"
-        android:shadowColor="#000000"
-        android:shadowDx="5"
-        android:shadowDy="5"
-        android:shadowRadius="10"
-        android:text="天"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="#FFFFFF"
-        android:textSize="28sp" />
 
 </RelativeLayout>
