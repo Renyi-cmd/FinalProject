@@ -13,7 +13,7 @@ public class DesktopWidget extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
-        CharSequence widgetText = "0";
+        CharSequence widgetText = "1";
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.desktop_widget);
         views.setTextViewText(R.id.daysLeft, widgetText);
