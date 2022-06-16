@@ -1,6 +1,0 @@
-<resources>
-    <string name="app_name">核酸提醒bot</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">剩余有效期</string>
-    <string name="app_widget_description">每天提示核酸剩余有效期</string>
-</resources>
