@@ -1,9 +1,12 @@
 package com.example.finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -12,6 +15,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -42,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     long prevTime = 0;
     long nextTime = 0;
     String idNum;
-    int validTime = 0;
+    int validTime = 72;
     int timeLeft = 0;
 
     Handler handler = new Handler();
@@ -93,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void autoRefresh() {
         String datas;
+        checkNeedPermissions();
         if(!(datas = readFile()).equals("")) {
             String[] args = datas.split("\n");
             idNum = args[1];
@@ -123,23 +128,16 @@ public class MainActivity extends AppCompatActivity {
                     refreshDisp();
                     NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(MainActivity.this);
                     if(timeLeft <= 24) {
-                        NotificationCompat.Builder builder;
                         if(timeLeft >= 0) {
-                            builder = new NotificationCompat.Builder(MainActivity.this, "NUCLEAR_ACID")
+                            NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "NUCLEAR_ACID")
                                     .setSmallIcon(R.mipmap.icon)
                                     .setContentTitle("核酸提醒🔈")
                                     .setContentText("上次核酸还有" + timeLeft + "小时过期")
                                     .setPriority(NotificationCompat.PRIORITY_MIN);
-                        } else {
-                            builder = new NotificationCompat.Builder(MainActivity.this, "NUCLEAR_ACID")
-                                    .setSmallIcon(R.mipmap.icon)
-                                    .setContentTitle("核酸提醒🔈")
-                                    .setContentText("核酸已经过期了耶……")
-                                    .setPriority(NotificationCompat.PRIORITY_MIN);
+                            Notification notification = builder.build();
+                            notification.flags = Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR;
+                            notificationManagerCompat.notify(0, notification);
                         }
-                        Notification notification = builder.build();
-                        notification.flags = Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR;
-                        notificationManagerCompat.notify(0, notification);
                     } else {
                         notificationManagerCompat.cancel(0);
                     }
@@ -171,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
         appWidgetManager.updateAppWidget(appWidgetManager.getAppWidgetIds(new ComponentName(this.getPackageName(), DesktopWidget.class.getName())), remoteViews);
         Toast.makeText(this, "已更新", Toast.LENGTH_SHORT).show();
     }
+
     private void createNotificationChannel() {
         CharSequence name = "NuclearAcidNotification";
         String description = "notification";
@@ -201,5 +200,17 @@ public class MainActivity extends AppCompatActivity {
             Log.e("ReadError", e.toString());
         }
         return ret;
+    }
+
+    private void checkNeedPermissions(){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+            }, 1);
+        }
     }
 }
