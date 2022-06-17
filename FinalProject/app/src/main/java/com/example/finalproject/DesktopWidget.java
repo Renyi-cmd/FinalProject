@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-
 public class DesktopWidget extends AppWidgetProvider {
 
     @Override

@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Log;
 import android.widget.Button;
@@ -43,6 +44,15 @@ public class MainActivity extends AppCompatActivity {
     String idNum;
     int validTime = 0;
     int timeLeft = 0;
+
+    Handler handler = new Handler();
+    Runnable refresh = new Runnable() {
+        @Override
+        public void run() {
+            autoRefresh();
+            handler.postDelayed(this, 3600000);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +87,8 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, com.example.finalproject.setting.class);
             startActivity(intent);
         });
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        autoRefresh();
-        refreshDisp();
+        refresh.run();
     }
 
     public void autoRefresh() {
@@ -116,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
                     prevTime = Objects.requireNonNull(sdf.parse(lastAcidTime, new ParsePosition(0))).getTime();
                     nextTime = prevTime + (long) validTime * 3600 * 1000;
                     refreshDisp();
+                    NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(MainActivity.this);
                     if(timeLeft <= 24) {
                         NotificationCompat.Builder builder;
                         if(timeLeft >= 0) {
@@ -133,8 +139,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                         Notification notification = builder.build();
                         notification.flags = Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR;
-                        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(MainActivity.this);
                         notificationManagerCompat.notify(0, notification);
+                    } else {
+                        notificationManagerCompat.cancel(0);
                     }
                 }
             } catch(Exception e) {
